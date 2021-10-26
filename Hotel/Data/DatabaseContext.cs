@@ -10,11 +10,8 @@ namespace Hotel.Data
     {
         public DatabaseContext(DbContextOptions options) : base(options)
         {}
-
-        
-
         public DbSet<Country> Countries { get; set; }
-        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Hotell> Hotels { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder builder)
         //{

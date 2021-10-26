@@ -12,5 +12,7 @@ namespace Hotel.Data
         public string Name { get; set; }
 
         public string ShortName { get; set; }
+
+        public virtual IList<Hotell> Hotels { get; set; }
     }
 }

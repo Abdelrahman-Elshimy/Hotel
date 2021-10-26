@@ -1,3 +1,5 @@
+using AutoMapper;
+using Hotel.Configurations;
 using Hotel.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +41,10 @@ namespace Hotel
                 o.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
+            // Auto Mapper
+
+            services.AddAutoMapper(typeof(MapperInitilizer));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hotel", Version = "v1" });
@@ -57,6 +63,7 @@ namespace Hotel
 
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
+
             app.UseRouting();
 
             app.UseAuthorization();
