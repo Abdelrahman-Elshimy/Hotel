@@ -1,6 +1,8 @@
 using AutoMapper;
 using Hotel.Configurations;
 using Hotel.Data;
+using Hotel.IRepository;
+using Hotel.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft;
 
 namespace Hotel
 {
@@ -33,7 +36,9 @@ namespace Hotel
             // add db context
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+); ;
 
             // Configure CORS
             services.AddCors(o =>
@@ -42,8 +47,10 @@ namespace Hotel
             });
 
             // Auto Mapper
-
             services.AddAutoMapper(typeof(MapperInitilizer));
+
+            // add dependency injection
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddSwaggerGen(c =>
             {
